@@ -66,21 +66,17 @@ public class EmployeeService extends ServiceBase {
 
     }
 
-    /**
-     * idを条件に取得したデータをEmployeeViewのインスタンスで返却する
-     * @param id
-     * @return 取得データのインスタンス
-     */
+     //idを条件に取得したデータをEmployeeViewのインスタンスで返却する
+     //@param id @return 取得データのインスタンス
+
     public EmployeeView findOne(int id) {
         Employee e = findOneInternal(id);
         return EmployeeConverter.toView(e);
     }
 
-    /**
-     * 社員番号を条件に該当するデータの件数を取得し、返却する
-     * @param code 社員番号
-     * @return 該当するデータの件数
-     */
+    //社員番号を条件に該当するデータの件数を取得し、返却する
+    //@param code 社員番号 @return 該当するデータの件数
+
     public long countByCode(String code) {
 
         //指定した社員番号を保持する従業員の件数を取得する
@@ -243,6 +239,11 @@ public class EmployeeService extends ServiceBase {
         Employee e = findOneInternal(ev.getId());
         EmployeeConverter.copyViewToModel(e, ev);
         em.getTransaction().commit();
+
+    }
+
+    public void close() {
+        // TODO 自動生成されたメソッド・スタブ
 
     }
 
