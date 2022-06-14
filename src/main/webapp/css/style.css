@@ -1,4 +1,4 @@
-@CHARSET "UTF-8";
+
 
 body {
     color: #333333;
@@ -109,4 +109,8 @@ tr.row1 {
 
 tr.row0 {
     background-color: #ffffff;
+}
+
+select {
+    height: 30px;
 }
