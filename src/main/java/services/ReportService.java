@@ -152,4 +152,9 @@ public class ReportService extends ServiceBase {
         em.getTransaction().commit();
 
     }
+
+    public void close() {
+        // TODO 自動生成されたメソッド・スタブ
+
+    }
 }

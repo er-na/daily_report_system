@@ -32,7 +32,7 @@ public class ReportAction extends ActionBase {
 
         //メソッドを実行
         invoke();
-        service.clise();
+        service.close();
     }
 
     /**
@@ -188,7 +188,6 @@ public class ReportAction extends ActionBase {
             forward(ForwardConst.FW_REP_EDIT);
         }
     }
-
     /**
      * 更新を行う
      * @throws ServletException
