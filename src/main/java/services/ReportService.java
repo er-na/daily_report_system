@@ -11,9 +11,8 @@ import constants.JpaConst;
 import models.Report;
 import models.validators.ReportValidator;
 
-/**
- * 日報テーブルの操作に関わる処理を行うクラス
- */
+    //日報テーブルの操作に関わる処理を行うクラス
+
 public class ReportService extends ServiceBase {
 
     /**
@@ -153,5 +152,4 @@ public class ReportService extends ServiceBase {
         em.getTransaction().commit();
 
     }
-
 }

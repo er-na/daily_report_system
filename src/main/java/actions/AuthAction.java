@@ -45,9 +45,11 @@ public class AuthAction extends ActionBase {
         //ログイン画面を表示
         forward(ForwardConst.FW_LOGIN);
     }
-
-    //ログイン処理を行う
-
+    /**
+     * ログイン処理を行う
+     * @throws ServletException
+     * @throws IOException
+     */
     public void login() throws ServletException, IOException {
 
         String code = getRequestParam(AttributeConst.EMP_CODE);
@@ -60,18 +62,15 @@ public class AuthAction extends ActionBase {
         if (isValidEmployee) {
             //認証成功の場合
 
-            //CSRE対策 tokenのチェック
+            //CSRF対策 tokenのチェック
             if (checkToken()) {
 
-                //ログインした従業員のOBデータを取得
+                //ログインした従業員のDBデータを取得
                 EmployeeView ev = service.findOne(code, plainPass, pepper);
-
                 //セッションにログインした従業員を設定
                 putSessionScope(AttributeConst.LOGIN_EMP, ev);
-
                 //セッションにログイン完了のフラッシュメッセージを設定
                 putSessionScope(AttributeConst.FLUSH, MessageConst.I_LOGINED.getMessage());
-
                 //トップページへリダイレクト
                 redirect(ForwardConst.ACT_TOP, ForwardConst.CMD_INDEX);
             }
@@ -90,7 +89,11 @@ public class AuthAction extends ActionBase {
         }
     }
 
-    //ログアウト処理を行う
+    /**
+     * ログアウト処理を行う
+     * @throws ServletException
+     * @throws IOException
+     */
     public void logout() throws ServletException, IOException {
 
         //セッションからログイン従業員のパラメータを削除

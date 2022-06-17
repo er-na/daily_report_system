@@ -6,9 +6,9 @@ import java.util.List;
 import actions.views.ReportView;
 import constants.MessageConst;
 
-/**
- * 日報インスタンスに設定されている値のバリデーションを行うクラス
- */
+
+    //日報インスタンスに設定されている値のバリデーションを行うクラス
+
 public class ReportValidator {
 
     /**

@@ -33,7 +33,7 @@ public class EmployeeAction extends ActionBase {
 
     //一覧画面を表示する @throws ServletEception @throws IOException
     public void index() throws ServletException, IOException {
-        //管理者かどうか
+      //管理者かどうかのチェック
         if (checkAdmin()) {
 
             //指定されたページ数の一覧画面に表示するデータを取得
@@ -65,7 +65,7 @@ public class EmployeeAction extends ActionBase {
     //@throws ServletException
     //@throws IOExcwption
     public void entryNew() throws ServletException, IOException {
-        //管理者かどうか
+      //管理者かどうかのチェック
         if (checkAdmin()) {
 
             putRequestScope(AttributeConst.TOKEN, getTokenId()); //CSRF対策用トークン
@@ -122,8 +122,11 @@ public class EmployeeAction extends ActionBase {
         }
     }
 
+     //詳細画面を表示する
+     //@throws ServletException
+     //@throws IOException
     public void show() throws ServletException, IOException {
-        //管理者かどうか
+      //管理者かどうかのチェック
         if (checkAdmin()) {
 
             //idを条件に従業員データを取得する
@@ -145,6 +148,9 @@ public class EmployeeAction extends ActionBase {
 
     //編集画面を表示する
     public void edit() throws ServletException, IOException {
+      //管理者かどうかのチェック
+        if (checkAdmin()) {
+
         //idを条件に従業員データを取得する
         EmployeeView ev = service.findOne(toNumber(getRequestParam(AttributeConst.EMP_ID)));
 
@@ -160,7 +166,7 @@ public class EmployeeAction extends ActionBase {
         //編集画面を表示する
         forward(ForwardConst.FW_EMP_EDIT);
     }
-
+}
     //更新を行う
     public void update() throws ServletException, IOException {
 
@@ -221,18 +227,25 @@ public class EmployeeAction extends ActionBase {
         }
     }
 
-    //ログイン中の従業員が管理者かどうかチェックし、管理者でなければエラー画面表示
+    /**
+     * ログイン中の従業員が管理者かどうかチェックし、管理者でなければエラー画面を表示
+     * true: 管理者 false: 管理者ではない
+     * @throws ServletException
+     * @throws IOException
+     */
     private boolean checkAdmin() throws ServletException, IOException {
 
         //セッションからログイン中の従業員情報を取得
         EmployeeView ev = (EmployeeView) getSessionScope(AttributeConst.LOGIN_EMP);
 
-        //管理者でなければエラー画面表示
+        //管理者でなければエラー画面を表示
         if (ev.getAdminFlag() != AttributeConst.ROLE_ADMIN.getIntegerValue()) {
 
             forward(ForwardConst.FW_ERR_UNKNOWN);
             return false;
+
         } else {
+
             return true;
         }
     }

@@ -97,9 +97,11 @@ public class LoginFilter implements Filter {
                         dispatcher.forward(request, response);
 
                         return;
+
                     }
                 }
             }
+
             //次のフィルタまたはサーブレットを呼び出し
             chain.doFilter(request, response);
         }
@@ -110,4 +112,5 @@ public class LoginFilter implements Filter {
      */
     public void init(FilterConfig fConfig) throws ServletException {
     }
+
 }

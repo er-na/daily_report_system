@@ -5,10 +5,9 @@ import java.util.List;
 
 import models.Report;
 
-/**
- * 日報データのDTOモデル⇔Viewモデルの変換を行うクラス
- *
- */
+
+     //日報データのDTOモデル⇔Viewモデルの変換を行うクラス
+
 public class ReportConverter {
 
     /**
@@ -76,7 +75,5 @@ public class ReportConverter {
         r.setContent(rv.getContent());
         r.setCreatedAt(rv.getCreatedAt());
         r.setUpdatedAt(rv.getUpdatedAt());
-
     }
-
 }

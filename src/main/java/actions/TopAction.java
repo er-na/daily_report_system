@@ -12,22 +12,28 @@ import constants.ForwardConst;
 import constants.JpaConst;
 import services.ReportService;
 
-//トップページに関する処理を行うActionクラス
+
+    //トップページに関する処理を行うActionクラス
 
 public class TopAction extends ActionBase {
 
     private ReportService service;
 
-    //indexメソッドを実行する
+     //indexメソッドを実行する
+
     @Override
     public void process() throws ServletException, IOException {
+
+        service = new ReportService();
 
         //メソッドを実行
         invoke();
         service.clise();
     }
 
-    //一覧画面を表示する
+    /**
+     * 一覧画面を表示する
+     */
     public void index() throws ServletException, IOException {
 
       //セッションからログイン中の従業員情報を取得
@@ -45,7 +51,6 @@ public class TopAction extends ActionBase {
         putRequestScope(AttributeConst.PAGE, page); //ページ数
         putRequestScope(AttributeConst.MAX_ROW, JpaConst.ROW_PER_PAGE); //1ページに表示するレコードの数
 
-
         //セッションにフラッシュメッセージが設定されている場合はリクエストスコープに移し替え、セッションからは削除する
         String flush = getSessionScope(AttributeConst.FLUSH);
         if (flush != null) {
@@ -53,7 +58,7 @@ public class TopAction extends ActionBase {
             removeSessionScope(AttributeConst.FLUSH);
         }
 
-        //一覧画面を表示する
+        //一覧画面を表示
         forward(ForwardConst.FW_TOP_INDEX);
     }
 

@@ -14,8 +14,10 @@ import constants.JpaConst;
 import constants.MessageConst;
 import services.ReportService;
 
-// 日報に関する処理を行うActionクラス
-
+/**
+ * 日報に関する処理を行うActionクラス
+ *
+ */
 public class ReportAction extends ActionBase {
 
     private ReportService service;
@@ -62,12 +64,10 @@ public class ReportAction extends ActionBase {
         //一覧画面を表示
         forward(ForwardConst.FW_REP_INDEX);
     }
+    //新規登録画面を表示する
+    //@throws ServletException
+    //@throws IOException
 
-    /**
-     * 新規登録画面を表示する
-     * @throws ServletException
-     * @throws IOException
-     */
     public void entryNew() throws ServletException, IOException {
 
         putRequestScope(AttributeConst.TOKEN, getTokenId()); //CSRF対策用トークン
@@ -81,10 +81,14 @@ public class ReportAction extends ActionBase {
         forward(ForwardConst.FW_REP_NEW);
     }
 
-    //新規登録
+    /**
+     * 新規登録を行う
+     * @throws ServletException
+     * @throws IOException
+     */
     public void create() throws ServletException, IOException {
 
-        //CSRF対策　tokenのチェック
+        //CSRF対策 tokenのチェック
         if (checkToken()) {
 
             //日報の日付が入力されていなければ、今日の日付を設定
@@ -99,10 +103,10 @@ public class ReportAction extends ActionBase {
             //セッションからログイン中の従業員情報を取得
             EmployeeView ev = (EmployeeView) getSessionScope(AttributeConst.LOGIN_EMP);
 
-            //パラメータの値を元に日報情報のインスタンスを作成する
+            //パラメータの値をもとに日報情報のインスタンスを作成する
             ReportView rv = new ReportView(
                     null,
-                    ev,
+                    ev, //ログインしている従業員を、日報作成者として登録する
                     day,
                     getRequestParam(AttributeConst.REP_TITLE),
                     getRequestParam(AttributeConst.REP_CONTENT),
@@ -115,12 +119,13 @@ public class ReportAction extends ActionBase {
             if (errors.size() > 0) {
                 //登録中にエラーがあった場合
 
-                putRequestScope(AttributeConst.TOKEN, getTokenId());//CSRF対策用トークン
+                putRequestScope(AttributeConst.TOKEN, getTokenId()); //CSRF対策用トークン
                 putRequestScope(AttributeConst.REPORT, rv);//入力された日報情報
-                putRequestScope(AttributeConst.ERR, errors);//エラーリスト
+                putRequestScope(AttributeConst.ERR, errors);//エラーのリスト
 
                 //新規登録画面を再表示
                 forward(ForwardConst.FW_REP_NEW);
+
             } else {
                 //登録中にエラーがなかった場合
 
@@ -133,7 +138,11 @@ public class ReportAction extends ActionBase {
         }
     }
 
-    //詳細画面を表示する
+    /**
+     * 詳細画面を表示する
+     * @throws ServletException
+     * @throws IOException
+     */
     public void show() throws ServletException, IOException {
 
         //idを条件に日報データを取得する
@@ -152,7 +161,11 @@ public class ReportAction extends ActionBase {
         }
     }
 
-    //編集画面を表示する
+    /**
+     * 編集画面を表示する
+     * @throws ServletException
+     * @throws IOException
+     */
     public void edit() throws ServletException, IOException {
 
         //idを条件に日報データを取得する
@@ -176,7 +189,11 @@ public class ReportAction extends ActionBase {
         }
     }
 
-    //更新を行う
+    /**
+     * 更新を行う
+     * @throws ServletException
+     * @throws IOException
+     */
     public void update() throws ServletException, IOException {
 
         //CSRF対策 tokenのチェック
