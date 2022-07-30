@@ -111,7 +111,8 @@ public class ReportAction extends ActionBase {
                     getRequestParam(AttributeConst.REP_TITLE),
                     getRequestParam(AttributeConst.REP_CONTENT),
                     null,
-                    null);
+                    null,
+                    0);
 
             //日報情報登録
             List<String> errors = service.create(rv);
@@ -166,6 +167,7 @@ public class ReportAction extends ActionBase {
      * @throws ServletException
      * @throws IOException
      */
+
     public void edit() throws ServletException, IOException {
 
         //idを条件に日報データを取得する
@@ -188,11 +190,39 @@ public class ReportAction extends ActionBase {
             forward(ForwardConst.FW_REP_EDIT);
         }
     }
+
     /**
-     * 更新を行う
+     * いいね数を1加算する
      * @throws ServletException
      * @throws IOException
      */
+
+    public void likeCount() throws ServletException, IOException {
+
+        //idを条件に日報データを取得する
+        ReportView rv = service.findOne(toNumber(getRequestParam(AttributeConst.REP_ID)));
+
+        //現在のいいね数に1を加算する
+        int likeCnt = rv.getLikeCount() + 1;
+
+        //加算したいいね数を設定する
+        rv.setLikeCount(likeCnt);
+
+        //日報データを更新する
+        service.update(rv);
+
+        //セッションに更新完了のフラッシュメッセージを設定
+        putSessionScope(AttributeConst.FLUSH, MessageConst.I_LIKECOUNT.getMessage());
+
+        //一覧画面にリダイレクト
+        redirect(ForwardConst.ACT_REP, ForwardConst.CMD_INDEX);
+    }
+
+    /**
+    * 更新を行う
+    * @throws ServletException
+    * @throws IOException
+    */
     public void update() throws ServletException, IOException {
 
         //CSRF対策 tokenのチェック

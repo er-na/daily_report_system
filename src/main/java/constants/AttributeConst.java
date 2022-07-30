@@ -41,6 +41,10 @@ public enum AttributeConst {
     DEL_FLAG_TRUE(1),
     DEL_FLAG_FALSE(0),
 
+    //いいね
+    IINE_COUNT("iine_count"),
+    IS_IINE("is_iine"),
+
     //日報管理
     REPORT("report"),
     REPORTS("reports"),
@@ -70,5 +74,4 @@ public enum AttributeConst {
     public Integer getIntegerValue() {
         return this.i;
     }
-
 }
